@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.env.*
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# Test data — not needed in production image
+tests/
+storage/
+artifacts/
+
+# IDE
+.vscode/
+.idea/

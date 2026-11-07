@@ -1,0 +1,22 @@
+# Web framework (Flask, not FastAPI)
+flask==3.1.3
+python-multipart==0.0.12
+
+# Data & ML
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
+scipy==1.14.1
+shap==0.46.0
+joblib==1.4.2
+
+# Config & utilities
+pydantic==2.9.2
+pydantic-settings==2.5.2
+python-dotenv==1.0.1
+
+# Production WSGI server
+gunicorn==23.0.0
+
+# Optional – MongoDB persistence (not required for file-based storage)
+pymongo==4.9.1

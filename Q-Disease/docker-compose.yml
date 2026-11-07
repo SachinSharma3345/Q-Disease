@@ -1,0 +1,59 @@
+# Q-Disease — Hybrid Quantum-Classical ML Platform
+#
+# Usage:
+#   docker compose up --build          # first run
+#   docker compose up -d               # background
+#   docker compose down -v             # stop and remove volumes
+#
+# Access:
+#   Frontend:  http://localhost:3000
+#   API:       http://localhost:8000/api/health
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: q-disease-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist datasets, models, artifacts and predictions across restarts.
+      - q-disease-storage:/app/storage
+      - q-disease-artifacts:/app/artifacts
+    environment:
+      # Flask 3.x uses FLASK_DEBUG instead of the deprecated FLASK_ENV.
+      - FLASK_DEBUG=0
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "python3", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # The browser proxies /api through Nginx → backend service.
+        # No change needed here; nginx.conf handles the proxy.
+        VITE_API_URL: ""
+    container_name: q-disease-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  q-disease-storage:
+    driver: local
+  q-disease-artifacts:
+    driver: local

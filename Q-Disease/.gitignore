@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+.venv/
+venv/
+env/
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Environment files (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Storage — runtime data, not tracked
+backend/storage/db/
+backend/storage/*.csv
+backend/storage/*.tmp
+
+# ML artefacts — large binary files
+backend/artifacts/
+backend/reports/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
